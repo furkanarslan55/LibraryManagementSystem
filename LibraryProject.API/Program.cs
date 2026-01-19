@@ -1,3 +1,5 @@
+using LibraryProject.Business.Abstract;
+using LibraryProject.Business.Concrete;
 using LibraryProject.DataAccess.Abstract;
 using LibraryProject.DataAccess.Concrete.EntityFramework;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +18,7 @@ builder.Services.AddDbContext<LibraryContext>(options =>
 );
 builder.Services.AddScoped<IBookDal, EfBookDal>();
 builder.Services.AddScoped<ICategoryDal, EfCategoryDal>();
+builder.Services.AddScoped<IBookService , BookManager>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
