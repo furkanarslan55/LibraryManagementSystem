@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LibraryProject.DataAccess.Concrete.EntityFramework.Configurations;
+using LibraryProject.Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LibraryProject.Entities.Concrete;
 
 namespace LibraryProject.DataAccess.Concrete.EntityFramework
 {
@@ -15,23 +16,12 @@ namespace LibraryProject.DataAccess.Concrete.EntityFramework
         }
         public DbSet<Book> Books { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Author> Authors { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
-            modelBuilder.Entity<Book>()
-                .Property(x => x.Title)
-                .IsRequired()
-                .HasMaxLength(100);
-
-       
-            modelBuilder.Entity<Category>()
-                .Property(x => x.Name)
-                .IsRequired();
-
-            modelBuilder.Entity<Category>()
-                .HasMany(c => c.Books)
-                .WithOne(b => b.Category)
-                .HasForeignKey(b => b.CategoryId);
+            //modelBuilder.ApplyConfiguration(new BookConfiguration()); // veya tek tek eklememiz gerek
+            modelBuilder.ApplyConfigurationsFromAssembly(System.Reflection.Assembly.GetExecutingAssembly()); //tüm konfigurasyonları al demek
+            base.OnModelCreating(modelBuilder);
         }
 
     }

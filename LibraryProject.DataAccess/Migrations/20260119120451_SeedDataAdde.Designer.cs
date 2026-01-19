@@ -4,6 +4,7 @@ using LibraryProject.DataAccess.Concrete.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryProject.DataAccess.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    partial class LibraryContextModelSnapshot : ModelSnapshot
+    [Migration("20260119120451_SeedDataAdde")]
+    partial class SeedDataAdde
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,61 +25,6 @@ namespace LibraryProject.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("LibraryProject.Entities.Concrete.Author", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Authors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BirthDate = new DateTime(1965, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2026, 1, 19, 15, 22, 33, 629, DateTimeKind.Local).AddTicks(5842),
-                            FirstName = "J.K.",
-                            LastName = "Rowling"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            BirthDate = new DateTime(1903, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2026, 1, 19, 15, 22, 33, 629, DateTimeKind.Local).AddTicks(5857),
-                            FirstName = "George",
-                            LastName = "Orwell"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            BirthDate = new DateTime(1821, 11, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2026, 1, 19, 15, 22, 33, 629, DateTimeKind.Local).AddTicks(5860),
-                            FirstName = "Fyodor",
-                            LastName = "Dostoyevski"
-                        });
-                });
-
             modelBuilder.Entity("LibraryProject.Entities.Concrete.Book", b =>
                 {
                     b.Property<int>("Id")
@@ -84,9 +32,6 @@ namespace LibraryProject.DataAccess.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("int");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -104,8 +49,6 @@ namespace LibraryProject.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuthorId");
-
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Books");
@@ -114,27 +57,24 @@ namespace LibraryProject.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            AuthorId = 1,
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2026, 1, 19, 15, 22, 33, 629, DateTimeKind.Local).AddTicks(9413),
+                            CreatedAt = new DateTime(2026, 1, 19, 15, 4, 50, 599, DateTimeKind.Local).AddTicks(2676),
                             Price = 250m,
                             Title = "Dune"
                         },
                         new
                         {
                             Id = 2,
-                            AuthorId = 2,
                             CategoryId = 2,
-                            CreatedAt = new DateTime(2026, 1, 19, 15, 22, 33, 629, DateTimeKind.Local).AddTicks(9420),
+                            CreatedAt = new DateTime(2026, 1, 19, 15, 4, 50, 599, DateTimeKind.Local).AddTicks(2689),
                             Price = 180m,
                             Title = "Suç ve Ceza"
                         },
                         new
                         {
                             Id = 3,
-                            AuthorId = 3,
                             CategoryId = 3,
-                            CreatedAt = new DateTime(2026, 1, 19, 15, 22, 33, 629, DateTimeKind.Local).AddTicks(9424),
+                            CreatedAt = new DateTime(2026, 1, 19, 15, 4, 50, 599, DateTimeKind.Local).AddTicks(2692),
                             Price = 200m,
                             Title = "Atomik Alışkanlıklar"
                         });
@@ -164,45 +104,32 @@ namespace LibraryProject.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2026, 1, 19, 15, 22, 33, 630, DateTimeKind.Local).AddTicks(1652),
+                            CreatedAt = new DateTime(2026, 1, 19, 15, 4, 50, 599, DateTimeKind.Local).AddTicks(5205),
                             Name = "Bilim Kurgu"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2026, 1, 19, 15, 22, 33, 630, DateTimeKind.Local).AddTicks(1658),
+                            CreatedAt = new DateTime(2026, 1, 19, 15, 4, 50, 599, DateTimeKind.Local).AddTicks(5210),
                             Name = "Dünya Klasikleri"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2026, 1, 19, 15, 22, 33, 630, DateTimeKind.Local).AddTicks(1661),
+                            CreatedAt = new DateTime(2026, 1, 19, 15, 4, 50, 599, DateTimeKind.Local).AddTicks(5213),
                             Name = "Kişisel Gelişim"
                         });
                 });
 
             modelBuilder.Entity("LibraryProject.Entities.Concrete.Book", b =>
                 {
-                    b.HasOne("LibraryProject.Entities.Concrete.Author", "Author")
-                        .WithMany("Books")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("LibraryProject.Entities.Concrete.Category", "Category")
                         .WithMany("Books")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Author");
-
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("LibraryProject.Entities.Concrete.Author", b =>
-                {
-                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("LibraryProject.Entities.Concrete.Category", b =>

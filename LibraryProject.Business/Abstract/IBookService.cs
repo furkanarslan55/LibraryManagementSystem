@@ -9,7 +9,7 @@ namespace LibraryProject.Business.Abstract
 {
     public interface IBookService
     {
-        List<BookListDto> GetAllBooks();
-        void AddBook(BookAddDto bookAddDto);
+        Task<List<BookListDto>> GetAllBooksAsync();
+        Task AddBookAsync(BookAddDto bookAddDto);
     }
 }

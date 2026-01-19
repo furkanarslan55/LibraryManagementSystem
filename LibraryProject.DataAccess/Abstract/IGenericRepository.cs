@@ -9,13 +9,14 @@ namespace LibraryProject.DataAccess.Abstract
 {
     public interface IGenericRepository<T> where T : class 
     {
-        T GetById(int id);
+        Task<T> GetByIdAsync(int id);
 
-        List<T> GetAll();
+        Task<List<T>> GetAllAsync();
 
-        List<T> GetAll(Expression<Func<T, bool>> filter);
+       Task<List<T>> GetAllAsync(Expression<Func<T, bool>> filter);
 
-        void Add(T entity);
+        Task AddAsync(T entity);
+        //Ef CORE DA update ve delete metotları senkron çalışır..Hafızada değişiklik yapar ve savechanges ile veritabanına yazarız.
         void Update(T entity);
         void Delete(T entity);
 

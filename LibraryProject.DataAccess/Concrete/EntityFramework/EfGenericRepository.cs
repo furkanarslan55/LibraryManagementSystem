@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using LibraryProject.DataAccess.Abstract;
 
 namespace LibraryProject.DataAccess.Concrete.EntityFramework
 {
@@ -20,67 +21,47 @@ namespace LibraryProject.DataAccess.Concrete.EntityFramework
         {
             _context = context;
         }
-        // Kodları buraya yazacağız.
-        // using kullanımı: Context nesnesini işi bitince bellekten atar (Garbage Collector'ı beklemez).
-        // Bu performans için kritiktir.
 
-        public void Add(TEntity entity)
+
+        public async Task AddAsync(TEntity entity)
         {
-            
-            
-                var addedEntity = _context.Entry(entity); // Veriyi yakala
-                addedEntity.State = EntityState.Added;   // Durumunu "Eklenecek" yap
-                _context.SaveChanges();                   // Veritabanına işle
-            
+            // AddAsync: EF Core'un asenkron ekleme metodu
+            await _context.Set<TEntity>().AddAsync(entity);
+            // SaveChangesAsync: Asıl sihir burası. Veritabanı yazarken thread serbest kalır.
+            await _context.SaveChangesAsync();
         }
 
         public void Delete(TEntity entity)
         {
-            
-            
-                var deletedEntity = _context.Entry(entity);
-                deletedEntity.State = EntityState.Deleted;
-                _context.SaveChanges();
-            
+            _context.Entry(entity).State = EntityState.Deleted;
+            // Delete işlemi hafızada olduğu için async gerekmez ama SaveChanges ASYNC olmalı.
+            // Ancak generic yapıda dönüş tipini void bıraktığımız için burada SaveChanges senkron kalabilir 
+            // VEYA UnitOfWork deseninde tek seferde kaydederiz.
+            // ŞİMDİLİK BASİT TUTUYORUZ:
+            _context.SaveChanges();
         }
 
         public void Update(TEntity entity)
         {
-            
-            
-                var updatedEntity = _context.Entry(entity);
-                updatedEntity.State = EntityState.Modified;
-                _context.SaveChanges();
-            
+            _context.Entry(entity).State = EntityState.Modified;
+            _context.SaveChanges();
         }
 
-        public TEntity GetById(int id)
+        public async Task<List<TEntity>> GetAllAsync()
         {
-           
-            
-                // Set<TEntity>(): Generic olarak tablolara erişmemizi sağlar.
-                // Eğer TEntity Book ise, context.Books'a gider.
-                return _context.Set<TEntity>().Find(id);
-            
+          
+            return await _context.Set<TEntity>().ToListAsync();
         }
 
-        public List<TEntity> GetAll()
+        public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter)
         {
-           
-            
-                return _context.Set<TEntity>().ToList();
-            
+            return await _context.Set<TEntity>().Where(filter).ToListAsync();
         }
 
-        public List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter)
+        public async Task<TEntity> GetByIdAsync(int id)
         {
            
-            
-                // Filtre varsa uygula, yoksa hepsini getir.
-                return filter == null
-                    ? _context.Set<TEntity>().ToList()
-                    : _context.Set<TEntity>().Where(filter).ToList();
-            
+            return await _context.Set<TEntity>().FindAsync(id);
         }
     }
 }

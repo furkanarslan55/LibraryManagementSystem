@@ -23,38 +23,22 @@ namespace LibraryProject.Business.Concrete
         }
 
 
-        public void AddBook(BookAddDto bookAddDto)
+        public async Task AddBookAsync(BookAddDto bookAddDto)
         {
-            if ( bookAddDto.Price <= 0)
-            {
-                throw new ArgumentException("Book price must be greater than zero.");
-            }
-
-
-            if (string.IsNullOrWhiteSpace(bookAddDto.Title))
-            {
-                throw new ArgumentException("Book title cannot be empty.");
-            }
-
             var bookEntity = _mapper.Map<Book>(bookAddDto);
 
-            _bookDal.Add(bookEntity);
-
-
+            // "await" ile Repository'nin işini bitirmesini bekliyoruz (ama thread bloklanmadan)
+            await _bookDal.AddAsync(bookEntity);
         }
 
-        public List<BookListDto> GetAllBooks()
+        public async Task<List<BookListDto>> GetAllBooksAsync()
         {
-
-            var bookEntities = _bookDal.GetAll();
+            // _bookDal.GetAll() ARTIK YOK. GetAllAsync() var.
+            var bookEntities = await _bookDal.GetBooksWithCategoryAsync();
 
             var bookDtos = _mapper.Map<List<BookListDto>>(bookEntities);
 
-           
-
             return bookDtos;
-
-
         }
 
 

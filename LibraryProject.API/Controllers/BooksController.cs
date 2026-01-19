@@ -19,27 +19,19 @@ namespace LibraryProject.API.Controllers
 
 
         [HttpGet]
-        public IActionResult GetAll()
+        // Dönüş tipi: async Task<IActionResult>
+        public async Task<IActionResult> GetAll()
         {
-            var books = _bookService.GetAllBooks();
-            return Ok(books);
+            var result = await _bookService.GetAllBooksAsync();
+            return Ok(result);
         }
 
         [HttpPost]
-
-        public IActionResult Add(BookAddDto bookAddDto)
+        public async Task<IActionResult> Add(BookAddDto bookAddDto)
         {
-
-            
-            
-                _bookService.AddBook(bookAddDto);
-                return Ok();
-            
-         
-
-
-
-
+            // Validasyon ve Hata yönetimi (Middleware) olduğu için burası tertemiz.
+            await _bookService.AddBookAsync(bookAddDto);
+            return Ok("Kitap başarıyla eklendi.");
         }
     }
 }

@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace LibraryProject.DataAccess.Abstract
 {
-    public interface IBookDal : IGenericRepository<Book>
+    public interface IAuthorDal :IGenericRepository<Author>
     {
-        Task<List<Book>> GetBooksWithCategoryAsync();
     }
 }
