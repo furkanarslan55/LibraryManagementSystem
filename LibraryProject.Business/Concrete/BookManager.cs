@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using LibraryProject.DataAccess.Abstract;
 using LibraryProject.Business.DTOs.BookDtos;
 using LibraryProject.Entities.Concrete;
-
+using AutoMapper;
 
 namespace LibraryProject.Business.Concrete
 {
@@ -15,9 +15,11 @@ namespace LibraryProject.Business.Concrete
     {
 
         private readonly IBookDal _bookDal;
-        public BookManager(IBookDal bookDal)
+        private readonly IMapper _mapper;
+        public BookManager(IBookDal bookDal, IMapper mapper )
         {
             _bookDal = bookDal;
+            _mapper = mapper;
         }
 
 
@@ -34,10 +36,7 @@ namespace LibraryProject.Business.Concrete
                 throw new ArgumentException("Book title cannot be empty.");
             }
 
-            Book bookEntity = new Book();
-            bookEntity.Title = bookAddDto.Title;
-            bookEntity.Price = bookAddDto.Price;
-            bookEntity.CategoryId = bookAddDto.CategoryId;
+            var bookEntity = _mapper.Map<Book>(bookAddDto);
 
             _bookDal.Add(bookEntity);
 
@@ -49,29 +48,9 @@ namespace LibraryProject.Business.Concrete
 
             var bookEntities = _bookDal.GetAll();
 
-            List<BookListDto> bookDtos = new List<BookListDto>();
+            var bookDtos = _mapper.Map<List<BookListDto>>(bookEntities);
 
-
-            foreach( var item in bookEntities)
-            {
-                bookDtos.Add(new BookListDto
-                {
-
-
-                    Id = item.Id,
-                    Title = item.Title,
-                    Price = item.Price,
-                    CategoryName = "Kategori bilgisi dah sonra eklenecek"
-
-
-                });
-
-          
-
-
-
-            }
-
+           
 
             return bookDtos;
 

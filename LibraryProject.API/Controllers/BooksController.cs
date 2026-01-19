@@ -30,15 +30,12 @@ namespace LibraryProject.API.Controllers
         public IActionResult Add(BookAddDto bookAddDto)
         {
 
-            try
-            {
+            
+            
                 _bookService.AddBook(bookAddDto);
                 return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            
+         
 
 
 
