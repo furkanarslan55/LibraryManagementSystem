@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="LibraryProject.API/LibraryProject.API.csproj" />
+  <Project Path="LibraryProject.Business/LibraryProject.Business.csproj" />
+  <Project Path="LibraryProject.DataAccess/LibraryProject.DataAccess.csproj" />
+  <Project Path="LibraryProject.Entities/LibraryProject.Entities.csproj" />
+</Solution>
