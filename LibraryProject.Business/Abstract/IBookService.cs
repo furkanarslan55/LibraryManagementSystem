@@ -11,5 +11,7 @@ namespace LibraryProject.Business.Abstract
     {
         Task<List<BookListDto>> GetAllBooksAsync();
         Task AddBookAsync(BookAddDto bookAddDto);
+        Task DeleteBookAsync(int id);
+        Task UpdateBookAsync(BookUpdateDto bookUpdateDto);
     }
 }

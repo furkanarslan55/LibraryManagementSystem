@@ -42,7 +42,9 @@ namespace LibraryProject.DataAccess.Concrete.EntityFramework.Configurations
                     Price = 200,
                     CategoryId = 3, // Kişisel Gelişim
                     CreatedAt = DateTime.Now,
-                    AuthorId = 3
+                    AuthorId = 3,
+                    
+                    
                 }
             );
         }

@@ -55,7 +55,7 @@ namespace LibraryProject.DataAccess.Migrations
                         {
                             Id = 1,
                             BirthDate = new DateTime(1965, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2026, 1, 19, 15, 22, 33, 629, DateTimeKind.Local).AddTicks(5842),
+                            CreatedAt = new DateTime(2026, 1, 20, 15, 33, 59, 923, DateTimeKind.Local).AddTicks(935),
                             FirstName = "J.K.",
                             LastName = "Rowling"
                         },
@@ -63,7 +63,7 @@ namespace LibraryProject.DataAccess.Migrations
                         {
                             Id = 2,
                             BirthDate = new DateTime(1903, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2026, 1, 19, 15, 22, 33, 629, DateTimeKind.Local).AddTicks(5857),
+                            CreatedAt = new DateTime(2026, 1, 20, 15, 33, 59, 923, DateTimeKind.Local).AddTicks(953),
                             FirstName = "George",
                             LastName = "Orwell"
                         },
@@ -71,7 +71,7 @@ namespace LibraryProject.DataAccess.Migrations
                         {
                             Id = 3,
                             BirthDate = new DateTime(1821, 11, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2026, 1, 19, 15, 22, 33, 629, DateTimeKind.Local).AddTicks(5860),
+                            CreatedAt = new DateTime(2026, 1, 20, 15, 33, 59, 923, DateTimeKind.Local).AddTicks(956),
                             FirstName = "Fyodor",
                             LastName = "Dostoyevski"
                         });
@@ -116,7 +116,7 @@ namespace LibraryProject.DataAccess.Migrations
                             Id = 1,
                             AuthorId = 1,
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2026, 1, 19, 15, 22, 33, 629, DateTimeKind.Local).AddTicks(9413),
+                            CreatedAt = new DateTime(2026, 1, 20, 15, 33, 59, 923, DateTimeKind.Local).AddTicks(5794),
                             Price = 250m,
                             Title = "Dune"
                         },
@@ -125,7 +125,7 @@ namespace LibraryProject.DataAccess.Migrations
                             Id = 2,
                             AuthorId = 2,
                             CategoryId = 2,
-                            CreatedAt = new DateTime(2026, 1, 19, 15, 22, 33, 629, DateTimeKind.Local).AddTicks(9420),
+                            CreatedAt = new DateTime(2026, 1, 20, 15, 33, 59, 923, DateTimeKind.Local).AddTicks(5805),
                             Price = 180m,
                             Title = "Suç ve Ceza"
                         },
@@ -134,7 +134,7 @@ namespace LibraryProject.DataAccess.Migrations
                             Id = 3,
                             AuthorId = 3,
                             CategoryId = 3,
-                            CreatedAt = new DateTime(2026, 1, 19, 15, 22, 33, 629, DateTimeKind.Local).AddTicks(9424),
+                            CreatedAt = new DateTime(2026, 1, 20, 15, 33, 59, 923, DateTimeKind.Local).AddTicks(5809),
                             Price = 200m,
                             Title = "Atomik Alışkanlıklar"
                         });
@@ -164,19 +164,19 @@ namespace LibraryProject.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2026, 1, 19, 15, 22, 33, 630, DateTimeKind.Local).AddTicks(1652),
+                            CreatedAt = new DateTime(2026, 1, 20, 15, 33, 59, 923, DateTimeKind.Local).AddTicks(9575),
                             Name = "Bilim Kurgu"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2026, 1, 19, 15, 22, 33, 630, DateTimeKind.Local).AddTicks(1658),
+                            CreatedAt = new DateTime(2026, 1, 20, 15, 33, 59, 923, DateTimeKind.Local).AddTicks(9582),
                             Name = "Dünya Klasikleri"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2026, 1, 19, 15, 22, 33, 630, DateTimeKind.Local).AddTicks(1661),
+                            CreatedAt = new DateTime(2026, 1, 20, 15, 33, 59, 923, DateTimeKind.Local).AddTicks(9585),
                             Name = "Kişisel Gelişim"
                         });
                 });

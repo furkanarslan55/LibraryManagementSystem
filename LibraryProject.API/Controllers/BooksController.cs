@@ -33,5 +33,18 @@ namespace LibraryProject.API.Controllers
             await _bookService.AddBookAsync(bookAddDto);
             return Ok("Kitap başarıyla eklendi.");
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _bookService.DeleteBookAsync(id);
+            return Ok("Kitap başarıyla silindi.");
+        }
+        [HttpPut]
+        public async Task<IActionResult> Update(BookUpdateDto bookUpdateDto)
+        {
+            await _bookService.UpdateBookAsync(bookUpdateDto);
+            return Ok("Kitap başarıyla güncellendi.");
+        }
     }
 }

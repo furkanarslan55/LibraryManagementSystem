@@ -17,6 +17,7 @@ namespace LibraryProject.DataAccess.Concrete.EntityFramework
         {
             return await _context.Books
                 .Include(b => b.Category)
+                .Include(b => b.Author)
                 .ToListAsync();
         }
     }

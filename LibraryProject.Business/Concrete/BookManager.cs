@@ -16,7 +16,8 @@ namespace LibraryProject.Business.Concrete
 
         private readonly IBookDal _bookDal;
         private readonly IMapper _mapper;
-        public BookManager(IBookDal bookDal, IMapper mapper )
+     
+        public BookManager(IBookDal bookDal, IMapper mapper)
         {
             _bookDal = bookDal;
             _mapper = mapper;
@@ -27,13 +28,13 @@ namespace LibraryProject.Business.Concrete
         {
             var bookEntity = _mapper.Map<Book>(bookAddDto);
 
-            // "await" ile Repository'nin işini bitirmesini bekliyoruz (ama thread bloklanmadan)
+            
             await _bookDal.AddAsync(bookEntity);
         }
 
-        public async Task<List<BookListDto>> GetAllBooksAsync()
+        public async Task <List<BookListDto>> GetAllBooksAsync()
         {
-            // _bookDal.GetAll() ARTIK YOK. GetAllAsync() var.
+        
             var bookEntities = await _bookDal.GetBooksWithCategoryAsync();
 
             var bookDtos = _mapper.Map<List<BookListDto>>(bookEntities);
@@ -41,6 +42,27 @@ namespace LibraryProject.Business.Concrete
             return bookDtos;
         }
 
+
+        public async Task DeleteBookAsync(int id)
+        {
+            var bookEntity = await _bookDal.GetByIdAsync(id);
+            if (bookEntity is null)
+            {
+                throw new Exception("Book not found");
+            }
+            _bookDal.Delete(bookEntity);
+        }
+
+        public async Task UpdateBookAsync(BookUpdateDto bookUpdateDto)
+        {
+            var bookEntity = await _bookDal.GetByIdAsync(bookUpdateDto.Id);
+            if (bookEntity is null)
+            {
+                throw new Exception("Book not found");
+            }
+            _mapper.Map(bookUpdateDto, bookEntity); // Update the existing entity with new values
+            _bookDal.Update(bookEntity);
+        }
 
     }
 }
