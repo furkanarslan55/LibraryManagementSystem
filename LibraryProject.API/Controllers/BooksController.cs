@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using LibraryProject.Business.Abstract;
 using LibraryProject.Business.DTOs.BookDtos;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace LibraryProject.API.Controllers
@@ -8,6 +9,7 @@ namespace LibraryProject.API.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class BooksController : Controller
     {
 

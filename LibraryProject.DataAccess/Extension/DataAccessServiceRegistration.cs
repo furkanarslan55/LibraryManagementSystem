@@ -17,6 +17,7 @@ namespace LibraryProject.DataAccess.Extension
             services.AddScoped<IBookDal, EfBookDal>();
             services.AddScoped<ICategoryDal, EfCategoryDal>();
             services.AddScoped<IAuthorDal, EfAuthorDal>();
+            services.AddScoped<IUserDal, EfUserDal>();
             return services;
         }
 

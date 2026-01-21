@@ -4,6 +4,7 @@ using FluentValidation.AspNetCore;
 using LibraryProject.Business.Abstract;
 using LibraryProject.Business.AutoMapper;
 using LibraryProject.Business.Concrete;
+using LibraryProject.Business.Security.JWT;
 using LibraryProject.Business.ValidationRules;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -28,7 +29,9 @@ namespace LibraryProject.Business.Extension
             services.AddFluentValidationClientsideAdapters();
             services.AddValidatorsFromAssemblyContaining<BookAddValidator>();
 
-          
+            services.AddScoped<ITokenHelper, JwtHelper>();
+            services.AddScoped<IAuthService, AuthManager>();
+
             services.AddScoped<IBookService, BookManager>();
             services.AddScoped<IAuthorService, AuthorManager>();
             return services;
