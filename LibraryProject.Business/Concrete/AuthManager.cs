@@ -1,6 +1,7 @@
 ﻿using LibraryProject.Business.Abstract;
 using LibraryProject.Business.DTOs.AuthDtos;
 using LibraryProject.Business.Security.Hashing;
+using LibraryProject.Business.Security.JWT;
 using LibraryProject.DataAccess.Abstract;
 using LibraryProject.Entities.Concrete;
 using System;
@@ -11,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace LibraryProject.Business.Concrete
 {
-    public class AuthManager(IUserDal userDal) :IAuthService
+    public class AuthManager(IUserDal userDal,ITokenHelper tokenHelper) :IAuthService
     {
         private readonly IUserDal _userDal = userDal;
-
-        public async Task<User> RegisterAsync(UserForRegisterDto userForRegisterDto)
+        private readonly ITokenHelper _tokenHelper = tokenHelper;
+        public async Task<AccessToken> RegisterAsync(UserForRegisterDto userForRegisterDto)
         {
             // 1. Şifreyi Kriptola (Hashing)
             // out parametresi ile değişkenleri dolduruyoruz.
@@ -35,11 +36,11 @@ namespace LibraryProject.Business.Concrete
             };
 
             // 3. Veritabanına Kaydet
-            await _userDal.AddAsync(user);
-            return user;
+            var accessToken = _tokenHelper.CreateToken(user);
+            return accessToken;
         }
 
-        public async Task<User> LoginAsync(UserForLoginDto userForLoginDto)
+        public async Task<AccessToken> LoginAsync(UserForLoginDto userForLoginDto)
         {
             // 1. Kullanıcıyı Mail ile Bul
             // (GenericRepository'de GetAllAsync(filter) metodunu kullanıyoruz)
@@ -59,7 +60,8 @@ namespace LibraryProject.Business.Concrete
             }
 
             // 3. Başarılıysa User'ı dön
-            return user;
+            var accessToken = _tokenHelper.CreateToken(user);
+            return accessToken;
         }
 
         public async Task<bool> UserExistsAsync(string email)

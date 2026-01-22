@@ -22,6 +22,11 @@ namespace LibraryProject.DataAccess.Concrete.EntityFramework
             _context = context;
         }
 
+        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter)
+        {
+            // FirstOrDefaultAsync: Filtreye uyan ilk kaydı bul, yoksa null dön.
+            return await _context.Set<TEntity>().FirstOrDefaultAsync(filter);
+        }
 
         public async Task AddAsync(TEntity entity)
         {
@@ -40,6 +45,7 @@ namespace LibraryProject.DataAccess.Concrete.EntityFramework
             // ŞİMDİLİK BASİT TUTUYORUZ:
             _context.SaveChanges();
         }
+    
 
         public void Update(TEntity entity)
         {
@@ -62,6 +68,23 @@ namespace LibraryProject.DataAccess.Concrete.EntityFramework
         {
            
             return await _context.Set<TEntity>().FindAsync(id);
+        }
+        public async Task<List<TEntity>> GetAllPagedAsync(Expression<Func<TEntity, bool>> filter, int pageNumber, int pageSize)
+        {
+            // 1. Önce Veritabanı sorgusunu hazırla (Henüz çalıştırma!)
+            var query = _context.Set<TEntity>().AsQueryable();
+
+            // 2. Filtre varsa ekle
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+           
+            return await query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync(); 
         }
     }
 }

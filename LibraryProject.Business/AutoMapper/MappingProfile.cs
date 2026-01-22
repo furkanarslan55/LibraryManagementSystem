@@ -1,12 +1,13 @@
-﻿using System;
+﻿using AutoMapper;
+using LibraryProject.Business.DTOs.AuthorDtos;
+using LibraryProject.Business.DTOs.BookDtos;
+using LibraryProject.Business.DTOs.LoanDtos;
+using LibraryProject.Entities.Concrete;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
-using LibraryProject.Business.DTOs.AuthorDtos;
-using LibraryProject.Business.DTOs.BookDtos;
-using LibraryProject.Entities.Concrete;
 
 namespace LibraryProject.Business.AutoMapper
 {
@@ -21,6 +22,13 @@ namespace LibraryProject.Business.AutoMapper
             CreateMap<Author,AuthorListDto>().ReverseMap();
             CreateMap<AuthorAddDto, Author>().ReverseMap();
             CreateMap<BookUpdateDto, Book>().ReverseMap();
+
+            CreateMap<LoanCreateDto, Loan>();
+
+
+            CreateMap<Loan, LoanDetailDto>()
+    .ForMember(dest => dest.BookName, opt => opt.MapFrom(src => src.Book.Title)) // Kitabın Adını Al
+    .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FirstName + " " + src.User.LastName)); // Ad Soyad Birleştir
         }
     }
 }

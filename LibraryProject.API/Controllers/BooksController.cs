@@ -48,5 +48,19 @@ namespace LibraryProject.API.Controllers
             await _bookService.UpdateBookAsync(bookUpdateDto);
             return Ok("Kitap başarıyla güncellendi.");
         }
+       
+
+        [HttpGet("search")]
+        // URL Örneği: /api/Books/search?text=Harry&pageNumber=2&pageSize=5
+        public async Task<IActionResult> SearchBooks(
+    [FromQuery] string? text,
+    [FromQuery] int? categoryId,
+    [FromQuery] int pageNumber = 1, // Göndermezse 1 kabul et
+    [FromQuery] int pageSize = 10   // Göndermezse 10 kabul et
+    )
+        {
+            var result = await _bookService.SearchBooksAsync(text, categoryId, pageNumber, pageSize);
+            return Ok(result);
+        }
     }
 }

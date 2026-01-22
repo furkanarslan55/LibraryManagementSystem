@@ -13,5 +13,6 @@ namespace LibraryProject.Business.Abstract
         Task AddBookAsync(BookAddDto bookAddDto);
         Task DeleteBookAsync(int id);
         Task UpdateBookAsync(BookUpdateDto bookUpdateDto);
+        Task<List<BookListDto>> SearchBooksAsync(string? text, int? categoryId, int pageNumber = 1, int pageSize = 10);
     }
 }

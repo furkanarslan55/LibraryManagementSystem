@@ -1,13 +1,14 @@
-﻿using LibraryProject.Business.Abstract;
+﻿using AutoMapper;
+using LibraryProject.Business.Abstract;
+using LibraryProject.Business.DTOs.BookDtos;
+using LibraryProject.DataAccess.Abstract;
+using LibraryProject.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using LibraryProject.DataAccess.Abstract;
-using LibraryProject.Business.DTOs.BookDtos;
-using LibraryProject.Entities.Concrete;
-using AutoMapper;
 
 namespace LibraryProject.Business.Concrete
 {
@@ -63,6 +64,19 @@ namespace LibraryProject.Business.Concrete
             _mapper.Map(bookUpdateDto, bookEntity); // Update the existing entity with new values
             _bookDal.Update(bookEntity);
         }
+        public async Task<List<BookListDto>> SearchBooksAsync(string? text, int? categoryId, int pageNumber = 1, int pageSize = 10)
+        {
+     
+            Expression<Func<Book, bool>> filter = x =>
+                (string.IsNullOrEmpty(text) || x.Title.Contains(text)) &&
+                (categoryId == null || x.CategoryId == categoryId);
 
+            var books = await _bookDal.GetAllPagedAsync(filter, pageNumber, pageSize);
+
+      
+            var bookDtos = _mapper.Map<List<BookListDto>>(books);
+
+            return bookDtos;
+        }
     }
 }
