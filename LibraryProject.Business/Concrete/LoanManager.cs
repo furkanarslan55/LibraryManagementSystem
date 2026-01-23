@@ -20,31 +20,29 @@ namespace LibraryProject.Business.Concrete
         public async Task LendBookAsync(LoanCreateDto loanCreateDto)
         {
             // KURAL 0.1: Böyle bir kitap var mı?
-            var bookToCheck = await _bookDal.GetByIdAsync(loanCreateDto.BookId);
-            if (bookToCheck == null)
+            // ADIM 1: Kitabın Kendisini Getir (Stok bilgisini öğrenmek için)
+            var book = await _bookDal.GetByIdAsync(loanCreateDto.BookId);
+
+            // Kitap hiç yoksa zaten veremeyiz (Validation)
+            if (book == null)
             {
-                throw new Exception("Böyle bir kitap bulunamadı! Lütfen geçerli bir Kitap ID giriniz.");
+                throw new Exception("Böyle bir kitap bulunamadı!");
             }
 
-            // KURAL 0.2: Böyle bir kullanıcı var mı?
-            var userToCheck = await _userDal.GetByIdAsync(loanCreateDto.UserId);
-            if (userToCheck == null)
+            // ADIM 2: Şu an bu kitaptan kaç tanesi dışarıda (İade edilmemiş)?
+            // İstatistik bölümünde generic repository'e Count metodu eklemiştik, hatırladın mı? Onu kullanıyoruz.
+            // Sorgu: BookId'si tutan VE ReturnDate'i NULL olanları say.
+            var activeLoanCount = await _loanDal.GetCountAsync(x => x.BookId == loanCreateDto.BookId && x.ReturnDate == null);
+
+            // ADIM 3: Matematiksel Karar Anı 🧮
+            // Eğer (Dışarıdakiler >= Stok) ise kapasite dolmuş demektir.
+            if (activeLoanCount >= book.Stock)
             {
-                throw new Exception("Böyle bir kullanıcı bulunamadı! Lütfen geçerli bir Kullanıcı ID giriniz.");
+                throw new Exception("Üzgünüz, bu kitabın tüm kopyaları şu an ödünç verilmiş durumda. Stokta yok.");
             }
 
-       
+            
 
-
-            // KURAL 1: Kitap şu an başkasında mı? 
-            var activeLoans = await _loanDal.GetAsync(x => x.BookId == loanCreateDto.BookId && x.ReturnDate == null);
-
-            if (activeLoans != null) 
-            {
-                throw new Exception("Bu kitap şu an başkasında, ödünç verilemez!");
-            }
-
-            // KURAL 2: Kaydı oluştur (Aynen kalıyor)
             var newLoan = _mapper.Map<Loan>(loanCreateDto);
             newLoan.LoanDate = DateTime.Now;
             newLoan.IsReturned = false;

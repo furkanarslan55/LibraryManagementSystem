@@ -86,5 +86,18 @@ namespace LibraryProject.DataAccess.Concrete.EntityFramework
                 .Take(pageSize)
                 .ToListAsync(); 
         }
+        public async Task<int> GetCountAsync(Expression<Func<TEntity, bool>> filter = null)
+        {
+            if (filter == null)
+            {
+                // Filtre yoksa tüm tabloyu say (SELECT COUNT(*) FROM Books)
+                return await _context.Set<TEntity>().CountAsync();
+            }
+            else
+            {
+                // Filtre varsa ona göre say (SELECT COUNT(*) FROM Books WHERE CategoryId=1)
+                return await _context.Set<TEntity>().CountAsync(filter);
+            }
+        }
     }
 }

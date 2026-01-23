@@ -25,6 +25,9 @@ namespace LibraryProject.Business.ValidationRules
             // Kategori Id kuralları
             RuleFor(x => x.CategoryId)
                 .GreaterThan(0).WithMessage("Lütfen geçerli bir kategori seçiniz.");
+
+
+            RuleFor(x=> x.Stock).GreaterThanOrEqualTo(0).WithMessage("Stok miktarı 0'dan küçük olamaz.");
         }
     }
 }

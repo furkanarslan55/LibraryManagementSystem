@@ -36,6 +36,9 @@ namespace LibraryProject.Business.Extension
             services.AddScoped<IAuthorService, AuthorManager>();
 
             services.AddScoped<ILoanService, LoanManager>();
+            services.AddScoped<IStatisticsService, StatisticsManager>();
+
+
             return services;
         }
     }

@@ -13,7 +13,7 @@ namespace LibraryProject.DataAccess.Abstract
 
         Task<List<T>> GetAllAsync();
         Task<T> GetAsync(Expression<Func<T, bool>> filter);
-
+        Task<int> GetCountAsync(Expression<Func<T, bool>> filter = null);
         Task<List<T>> GetAllAsync(Expression<Func<T, bool>> filter);
         Task<List<T>> GetAllPagedAsync(Expression<Func<T, bool>> filter, int pageNumber, int pageSize);
         Task AddAsync(T entity);
