@@ -23,6 +23,15 @@ namespace LibraryProject.DataAccess.Concrete.EntityFramework
         {
             //modelBuilder.ApplyConfiguration(new BookConfiguration()); // veya tek tek eklememiz gerek
             modelBuilder.ApplyConfigurationsFromAssembly(System.Reflection.Assembly.GetExecutingAssembly()); //tüm konfigurasyonları al demek
+
+
+            modelBuilder.Entity<Book>().HasQueryFilter(x => !x.IsDeleted);
+
+            // Aynı kuralı diğer tablolar için de koyalım:
+            modelBuilder.Entity<Author>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<User>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<Loan>().HasQueryFilter(x => !x.IsDeleted);
+
             base.OnModelCreating(modelBuilder);
         }
 

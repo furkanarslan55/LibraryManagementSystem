@@ -1,4 +1,7 @@
 ﻿using LibraryProject.DataAccess.Abstract;
+using LibraryProject.DataAccess.Abstract;
+using LibraryProject.Entities.Abstract;
+using LibraryProject.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,12 +9,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using LibraryProject.DataAccess.Abstract;
 
 namespace LibraryProject.DataAccess.Concrete.EntityFramework
 {
     public class EfGenericRepository<TEntity, TContext> : IGenericRepository<TEntity>
-         where TEntity : class
+         where TEntity : BaseEntity, new()
          where TContext : DbContext
     {
         protected readonly TContext _context;
@@ -36,13 +38,14 @@ namespace LibraryProject.DataAccess.Concrete.EntityFramework
             await _context.SaveChangesAsync();
         }
 
-        public void Delete(TEntity entity)
+        public void  Delete(TEntity entity)
         {
-            _context.Entry(entity).State = EntityState.Deleted;
-            // Delete işlemi hafızada olduğu için async gerekmez ama SaveChanges ASYNC olmalı.
-            // Ancak generic yapıda dönüş tipini void bıraktığımız için burada SaveChanges senkron kalabilir 
-            // VEYA UnitOfWork deseninde tek seferde kaydederiz.
-            // ŞİMDİLİK BASİT TUTUYORUZ:
+
+            entity.IsDeleted = true;
+
+
+            _context.Set<TEntity>().Update(entity);
+
             _context.SaveChanges();
         }
     
