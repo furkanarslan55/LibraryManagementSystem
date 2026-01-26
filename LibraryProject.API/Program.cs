@@ -1,6 +1,7 @@
 using AutoMapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using LibraryProject.API.Services;
 using LibraryProject.Business.Abstract;
 using LibraryProject.Business.AutoMapper;
 using LibraryProject.Business.Concrete;
@@ -23,6 +24,10 @@ builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<BookAddValidator>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddHttpContextAccessor();
+
+// 2. Bizim yazdýðýmýz servisi tanýt (Scoped olmasý önemli)
+builder.Services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 builder.Services.AddSwaggerGen(c =>
 {
     // Kilit ikonunu ekle

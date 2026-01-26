@@ -44,7 +44,7 @@ namespace LibraryProject.Business.Concrete
             
 
             var newLoan = _mapper.Map<Loan>(loanCreateDto);
-            newLoan.LoanDate = DateTime.Now;
+        
             newLoan.IsReturned = false;
 
             await _loanDal.AddAsync(newLoan);

@@ -62,5 +62,12 @@ namespace LibraryProject.API.Controllers
             var result = await _bookService.SearchBooksAsync(text, categoryId, pageNumber, pageSize);
             return Ok(result);
         }
+
+        [HttpGet("booksearch")] // URL şöyle olacak: api/books/search?keyword=harry
+        public async Task<IActionResult> Search([FromQuery] string keyword)
+        {
+            var result = await _bookService.SearchBooksAsync(keyword);
+            return Ok(result);
+        }
     }
 }

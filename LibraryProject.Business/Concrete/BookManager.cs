@@ -78,5 +78,28 @@ namespace LibraryProject.Business.Concrete
 
             return bookDtos;
         }
+        public async Task<List<BookListDto>> SearchBooksAsync(string keyword)
+        {
+            // 1. Validasyon: Boş arama yapılmasın
+            if (string.IsNullOrEmpty(keyword) || keyword.Length < 3)
+            {
+                throw new Exception("Arama yapmak için en az 3 karakter girmelisiniz.");
+            }
+
+            // 2. Küçük Harf Duyarlılığı (Case Insensitive)
+            // Veritabanındaki 'JAVA' ile aranan 'java' eşleşsin diye keyword'ü küçültüyoruz.
+            var searchKey = keyword.ToLower();
+
+            // 3. Veritabanı Sorgusu (LINQ)
+            // DAL katmanındaki "GetAllAsync" metodu içine bir filtre (Expression) alabiliyor.
+            var books = await _bookDal.GetAllAsync(x =>
+                x.Title.ToLower().Contains(searchKey) 
+             
+            );
+
+            // 4. Mapping (Entity -> DTO)
+            return _mapper.Map<List<BookListDto>>(books);
+        }
+
     }
 }

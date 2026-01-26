@@ -4,6 +4,7 @@ using LibraryProject.DataAccess.Concrete.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryProject.DataAccess.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    partial class LibraryContextModelSnapshot : ModelSnapshot
+    [Migration("20260126125333_ınterceptor")]
+    partial class ınterceptor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,9 +39,6 @@ namespace LibraryProject.DataAccess.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CreatedBy")
-                        .HasColumnType("int");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -52,9 +52,6 @@ namespace LibraryProject.DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -67,7 +64,7 @@ namespace LibraryProject.DataAccess.Migrations
                         {
                             Id = 1,
                             BirthDate = new DateTime(1965, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2026, 1, 26, 16, 26, 29, 138, DateTimeKind.Local).AddTicks(3092),
+                            CreatedAt = new DateTime(2026, 1, 26, 15, 53, 32, 483, DateTimeKind.Local).AddTicks(4783),
                             FirstName = "J.K.",
                             IsDeleted = false,
                             LastName = "Rowling"
@@ -76,7 +73,7 @@ namespace LibraryProject.DataAccess.Migrations
                         {
                             Id = 2,
                             BirthDate = new DateTime(1903, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2026, 1, 26, 16, 26, 29, 138, DateTimeKind.Local).AddTicks(3107),
+                            CreatedAt = new DateTime(2026, 1, 26, 15, 53, 32, 483, DateTimeKind.Local).AddTicks(4797),
                             FirstName = "George",
                             IsDeleted = false,
                             LastName = "Orwell"
@@ -85,7 +82,7 @@ namespace LibraryProject.DataAccess.Migrations
                         {
                             Id = 3,
                             BirthDate = new DateTime(1821, 11, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2026, 1, 26, 16, 26, 29, 138, DateTimeKind.Local).AddTicks(3110),
+                            CreatedAt = new DateTime(2026, 1, 26, 15, 53, 32, 483, DateTimeKind.Local).AddTicks(4800),
                             FirstName = "Fyodor",
                             IsDeleted = false,
                             LastName = "Dostoyevski"
@@ -109,9 +106,6 @@ namespace LibraryProject.DataAccess.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CreatedBy")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -125,9 +119,6 @@ namespace LibraryProject.DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
-
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -146,7 +137,7 @@ namespace LibraryProject.DataAccess.Migrations
                             Id = 1,
                             AuthorId = 1,
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2026, 1, 26, 16, 26, 29, 138, DateTimeKind.Local).AddTicks(6339),
+                            CreatedAt = new DateTime(2026, 1, 26, 15, 53, 32, 483, DateTimeKind.Local).AddTicks(7753),
                             IsDeleted = false,
                             Price = 250m,
                             Stock = 0,
@@ -157,7 +148,7 @@ namespace LibraryProject.DataAccess.Migrations
                             Id = 2,
                             AuthorId = 2,
                             CategoryId = 2,
-                            CreatedAt = new DateTime(2026, 1, 26, 16, 26, 29, 138, DateTimeKind.Local).AddTicks(6347),
+                            CreatedAt = new DateTime(2026, 1, 26, 15, 53, 32, 483, DateTimeKind.Local).AddTicks(7761),
                             IsDeleted = false,
                             Price = 180m,
                             Stock = 0,
@@ -168,7 +159,7 @@ namespace LibraryProject.DataAccess.Migrations
                             Id = 3,
                             AuthorId = 3,
                             CategoryId = 3,
-                            CreatedAt = new DateTime(2026, 1, 26, 16, 26, 29, 138, DateTimeKind.Local).AddTicks(6350),
+                            CreatedAt = new DateTime(2026, 1, 26, 15, 53, 32, 483, DateTimeKind.Local).AddTicks(7764),
                             IsDeleted = false,
                             Price = 200m,
                             Stock = 0,
@@ -187,9 +178,6 @@ namespace LibraryProject.DataAccess.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CreatedBy")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -197,9 +185,6 @@ namespace LibraryProject.DataAccess.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -212,21 +197,21 @@ namespace LibraryProject.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2026, 1, 26, 16, 26, 29, 138, DateTimeKind.Local).AddTicks(8607),
+                            CreatedAt = new DateTime(2026, 1, 26, 15, 53, 32, 484, DateTimeKind.Local).AddTicks(132),
                             IsDeleted = false,
                             Name = "Bilim Kurgu"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2026, 1, 26, 16, 26, 29, 138, DateTimeKind.Local).AddTicks(8613),
+                            CreatedAt = new DateTime(2026, 1, 26, 15, 53, 32, 484, DateTimeKind.Local).AddTicks(138),
                             IsDeleted = false,
                             Name = "Dünya Klasikleri"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2026, 1, 26, 16, 26, 29, 138, DateTimeKind.Local).AddTicks(8616),
+                            CreatedAt = new DateTime(2026, 1, 26, 15, 53, 32, 484, DateTimeKind.Local).AddTicks(140),
                             IsDeleted = false,
                             Name = "Kişisel Gelişim"
                         });
@@ -246,9 +231,6 @@ namespace LibraryProject.DataAccess.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CreatedBy")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -260,9 +242,6 @@ namespace LibraryProject.DataAccess.Migrations
 
                     b.Property<DateTime?>("ReturnDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -289,9 +268,6 @@ namespace LibraryProject.DataAccess.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("CreatedBy")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -325,9 +301,6 @@ namespace LibraryProject.DataAccess.Migrations
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");

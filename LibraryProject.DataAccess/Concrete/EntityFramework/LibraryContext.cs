@@ -1,6 +1,8 @@
 ﻿using LibraryProject.DataAccess.Concrete.EntityFramework.Configurations;
+using LibraryProject.DataAccess.Interceptors;
 using LibraryProject.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +33,9 @@ namespace LibraryProject.DataAccess.Concrete.EntityFramework
             modelBuilder.Entity<Author>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<User>().HasQueryFilter(x => !x.IsDeleted);
             modelBuilder.Entity<Loan>().HasQueryFilter(x => !x.IsDeleted);
+
+
+          
 
             base.OnModelCreating(modelBuilder);
         }
