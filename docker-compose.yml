@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  # 1. KUTU: SQL SERVER
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: library_db
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Sifre123!_GucluOlmali
+      - ASPNETCORE_ENVIRONMENT=Development 
+      - ASPNETCORE_URLS=http://+:8080
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+
+  # 2. KUTU: SENİN API
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: library_api
+    depends_on:
+      - db
+    ports:
+      - "5000:8080"
+    environment:
+      - ConnectionStrings__SqlCon=Server=db;Database=LibraryDb;User Id=sa;Password=Sifre123!_GucluOlmali;TrustServerCertificate=True;
+
+volumes:
+  sql_data:

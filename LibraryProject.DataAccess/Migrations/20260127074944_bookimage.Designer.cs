@@ -4,6 +4,7 @@ using LibraryProject.DataAccess.Concrete.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryProject.DataAccess.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    partial class LibraryContextModelSnapshot : ModelSnapshot
+    [Migration("20260127074944_bookimage")]
+    partial class bookimage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,7 +70,7 @@ namespace LibraryProject.DataAccess.Migrations
                         {
                             Id = 1,
                             BirthDate = new DateTime(1965, 7, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2026, 1, 27, 11, 9, 53, 898, DateTimeKind.Local).AddTicks(5866),
+                            CreatedAt = new DateTime(2026, 1, 27, 10, 49, 43, 627, DateTimeKind.Local).AddTicks(7558),
                             FirstName = "J.K.",
                             IsDeleted = false,
                             LastName = "Rowling"
@@ -76,7 +79,7 @@ namespace LibraryProject.DataAccess.Migrations
                         {
                             Id = 2,
                             BirthDate = new DateTime(1903, 6, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2026, 1, 27, 11, 9, 53, 898, DateTimeKind.Local).AddTicks(5881),
+                            CreatedAt = new DateTime(2026, 1, 27, 10, 49, 43, 627, DateTimeKind.Local).AddTicks(7577),
                             FirstName = "George",
                             IsDeleted = false,
                             LastName = "Orwell"
@@ -85,7 +88,7 @@ namespace LibraryProject.DataAccess.Migrations
                         {
                             Id = 3,
                             BirthDate = new DateTime(1821, 11, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedAt = new DateTime(2026, 1, 27, 11, 9, 53, 898, DateTimeKind.Local).AddTicks(5884),
+                            CreatedAt = new DateTime(2026, 1, 27, 10, 49, 43, 627, DateTimeKind.Local).AddTicks(7581),
                             FirstName = "Fyodor",
                             IsDeleted = false,
                             LastName = "Dostoyevski"
@@ -149,7 +152,7 @@ namespace LibraryProject.DataAccess.Migrations
                             Id = 1,
                             AuthorId = 1,
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2026, 1, 27, 11, 9, 53, 898, DateTimeKind.Local).AddTicks(9152),
+                            CreatedAt = new DateTime(2026, 1, 27, 10, 49, 43, 628, DateTimeKind.Local).AddTicks(686),
                             IsDeleted = false,
                             Price = 250m,
                             Stock = 0,
@@ -160,7 +163,7 @@ namespace LibraryProject.DataAccess.Migrations
                             Id = 2,
                             AuthorId = 2,
                             CategoryId = 2,
-                            CreatedAt = new DateTime(2026, 1, 27, 11, 9, 53, 898, DateTimeKind.Local).AddTicks(9158),
+                            CreatedAt = new DateTime(2026, 1, 27, 10, 49, 43, 628, DateTimeKind.Local).AddTicks(693),
                             IsDeleted = false,
                             Price = 180m,
                             Stock = 0,
@@ -171,7 +174,7 @@ namespace LibraryProject.DataAccess.Migrations
                             Id = 3,
                             AuthorId = 3,
                             CategoryId = 3,
-                            CreatedAt = new DateTime(2026, 1, 27, 11, 9, 53, 898, DateTimeKind.Local).AddTicks(9162),
+                            CreatedAt = new DateTime(2026, 1, 27, 10, 49, 43, 628, DateTimeKind.Local).AddTicks(697),
                             IsDeleted = false,
                             Price = 200m,
                             Stock = 0,
@@ -260,21 +263,21 @@ namespace LibraryProject.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2026, 1, 27, 11, 9, 53, 899, DateTimeKind.Local).AddTicks(1632),
+                            CreatedAt = new DateTime(2026, 1, 27, 10, 49, 43, 628, DateTimeKind.Local).AddTicks(2943),
                             IsDeleted = false,
                             Name = "Bilim Kurgu"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2026, 1, 27, 11, 9, 53, 899, DateTimeKind.Local).AddTicks(1638),
+                            CreatedAt = new DateTime(2026, 1, 27, 10, 49, 43, 628, DateTimeKind.Local).AddTicks(2950),
                             IsDeleted = false,
                             Name = "Dünya Klasikleri"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2026, 1, 27, 11, 9, 53, 899, DateTimeKind.Local).AddTicks(1640),
+                            CreatedAt = new DateTime(2026, 1, 27, 10, 49, 43, 628, DateTimeKind.Local).AddTicks(2952),
                             IsDeleted = false,
                             Name = "Kişisel Gelişim"
                         });

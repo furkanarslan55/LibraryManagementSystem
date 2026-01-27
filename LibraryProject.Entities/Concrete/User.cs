@@ -18,7 +18,7 @@ namespace LibraryProject.Entities.Concrete
         public byte[] PasswordSalt { get; set; }
     
 
-        public string Role { get; set; } // Kullanıcının rolü (örneğin, Admin, User vb.)
+        public string Role { get; set; } ="User"; // Varsayılan rol "User" olarak
         public DateTime CreatedDate { get; set; }
     }
 }

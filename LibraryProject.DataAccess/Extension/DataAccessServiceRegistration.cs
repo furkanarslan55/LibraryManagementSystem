@@ -27,7 +27,8 @@ namespace LibraryProject.DataAccess.Extension
             services.AddScoped<IAuthorDal, EfAuthorDal>();
             services.AddScoped<IUserDal, EfUserDal>();
             services.AddScoped<ILoanDal, EfLoanDal>();
-
+            services.AddScoped<IFavoriteDal, EfFavoriteDal>();
+            services.AddScoped<IBookCommentDal, EfBookCommentDal>();
             return services;
         }
     }

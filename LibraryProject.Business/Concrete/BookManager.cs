@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using LibraryProject.Business.Abstract;
 using LibraryProject.Business.DTOs.BookDtos;
 using LibraryProject.DataAccess.Abstract;
@@ -17,21 +18,60 @@ namespace LibraryProject.Business.Concrete
 
         private readonly IBookDal _bookDal;
         private readonly IMapper _mapper;
-     
-        public BookManager(IBookDal bookDal, IMapper mapper)
+        private readonly IValidator<BookAddDto> _validator;
+        public BookManager(IBookDal bookDal, IMapper mapper, IValidator<BookAddDto> validator)
         {
             _bookDal = bookDal;
             _mapper = mapper;
+            _validator = validator;
         }
 
 
         public async Task AddBookAsync(BookAddDto bookAddDto)
         {
-            var bookEntity = _mapper.Map<Book>(bookAddDto);
 
-            
-            await _bookDal.AddAsync(bookEntity);
+
+            // 1. Önce DTO'yu Entity'e çevir (AutoMapper)
+            var book = _mapper.Map<Book>(bookAddDto);
+
+            // 2. RESİM YÜKLEME İŞLEMİ
+            if (bookAddDto.Image != null)
+            {
+                // A. Klasör Yolu: Projenin çalıştığı yerdeki wwwroot/uploads klasörü
+                var currentDirectory = Directory.GetCurrentDirectory();
+                var folderName = Path.Combine("wwwroot", "uploads");
+                var pathToSave = Path.Combine(currentDirectory, folderName);
+
+                // Klasör yoksa oluştur (Garanti olsun)
+                if (!Directory.Exists(pathToSave))
+                {
+                    Directory.CreateDirectory(pathToSave);
+                }
+
+                // B. Benzersiz Dosya Adı Oluşturma (GUID)
+              
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(bookAddDto.Image.FileName);
+
+                // C. Tam Kayıt Yolu
+                var fullPath = Path.Combine(pathToSave, fileName);
+                var dbPath = Path.Combine("uploads", fileName); // Veritabanına yazılacak kısım
+
+                // D. Dosyayı Diske Kaydet (Stream)
+                using (var stream = new FileStream(fullPath, FileMode.Create))
+                {
+                    await bookAddDto.Image.CopyToAsync(stream);
+                }
+
+                // E. Veritabanı nesnesine yolu ata
+                book.ImageUrl = dbPath;
+            }
+
+            // 3. Veritabanına Kaydet
+            await _bookDal.AddAsync(book);
         }
+
+           
+       
 
         public async Task <List<BookListDto>> GetAllBooksAsync()
         {

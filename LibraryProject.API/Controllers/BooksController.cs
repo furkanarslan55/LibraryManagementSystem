@@ -29,11 +29,10 @@ namespace LibraryProject.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(BookAddDto bookAddDto)
+        public async Task<IActionResult> Add([FromForm] BookAddDto bookAddDto) //dosya yükleme için FromForm kullanılır
         {
-            // Validasyon ve Hata yönetimi (Middleware) olduğu için burası tertemiz.
             await _bookService.AddBookAsync(bookAddDto);
-            return Ok("Kitap başarıyla eklendi.");
+            return Ok("Kitap ve resim başarıyla eklendi.");
         }
 
         [HttpDelete("{id}")]

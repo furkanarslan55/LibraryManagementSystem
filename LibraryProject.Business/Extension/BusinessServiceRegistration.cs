@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,7 +39,9 @@ namespace LibraryProject.Business.Extension
             services.AddScoped<ILoanService, LoanManager>();
             services.AddScoped<IStatisticsService, StatisticsManager>();
 
-
+            services.AddScoped<IFavoriteService, FavoriteManager>();
+            services.AddScoped<IBookCommentService, BookCommentManager>();
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             return services;
         }
     }

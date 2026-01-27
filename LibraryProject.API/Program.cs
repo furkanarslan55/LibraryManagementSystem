@@ -1,10 +1,6 @@
-using AutoMapper;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using LibraryProject.API.Services;
-using LibraryProject.Business.Abstract;
-using LibraryProject.Business.AutoMapper;
-using LibraryProject.Business.Concrete;
 using LibraryProject.Business.Extension;
 using LibraryProject.Business.Security.JWT;
 using LibraryProject.Business.ValidationRules;
@@ -14,14 +10,19 @@ using LibraryProject.DataAccess.Extension;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
+builder.Host.UseSerilog();
 builder.Services.AddControllers();
 builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddValidatorsFromAssemblyContaining<BookAddValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<BookAddValidator>(); //tüm validatorleri ekler
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
@@ -84,17 +85,33 @@ var app = builder.Build();
 app.UseMiddleware<LibraryProject.API.Middlewares.GlobalExceptionMiddleware>();  //middleware ekleme
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+
+
     app.UseSwagger();
     app.UseSwaggerUI();
-}
 
-app.UseHttpsRedirection();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<LibraryContext>();
+        // Eðer veritabaný yoksa oluþtur, bekleyen migration varsa uygula.
+        context.Database.Migrate();
+
+        // (Ýstersen buraya ilk Admin kullanýcýsýný ekleyen kod da yazýlýr - Seed Data)
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Veritabaný oluþturulurken hata çýktý.");
+    }
+}
+//app.UseHttpsRedirection();
 app.UseAuthentication(); // 1. Sen kimsin? (Kimlik Kontrolü)
 app.UseAuthorization();  // 2. Yetkin var mý? (Yetki Kontrolü)
 
-
+app.UseStaticFiles(); // wwwroot klasörünü kullanmak için
 app.MapControllers();
 
 app.Run();

@@ -21,6 +21,8 @@ namespace LibraryProject.DataAccess.Concrete.EntityFramework
         public DbSet<Author> Authors { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Loan> Loans { get; set; }
+        public DbSet<Favorite> Favorites { get; set; }
+        public DbSet<BookComment> BookComments { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.ApplyConfiguration(new BookConfiguration()); // veya tek tek eklememiz gerek
